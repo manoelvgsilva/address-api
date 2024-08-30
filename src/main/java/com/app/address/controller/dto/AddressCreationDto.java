@@ -7,12 +7,13 @@ public record AddressCreationDto(
     String complement,
     String neighborhood,
     String location,
-    String fu
+    String fu,
+    Long number
 ) {
 
   public Address toEntity() {
     return new Address(publicLoc, complement, neighborhood,
         location,
-        fu);
+        fu, number);
   }
 }

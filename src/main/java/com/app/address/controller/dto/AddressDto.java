@@ -8,7 +8,8 @@ public record AddressDto(
     String complement,
     String neighborhood,
     String location,
-    String fu
+    String fu,
+    Long number
 ) {
 
   public static AddressDto fromEntity(Address address) {
@@ -18,7 +19,8 @@ public record AddressDto(
         address.getComplement(),
         address.getNeighborhood(),
         address.getLocation(),
-        address.getFu()
+        address.getFu(),
+        address.getNumber()
     );
   }
 }

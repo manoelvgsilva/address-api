@@ -27,8 +27,10 @@ public class Address {
   private String neighborhood;
   private String location;
   private String fu;
+  private Long number;
 
-  public Address(String publicLoc, String complement, String neighborhood, String location, String fu) {
+  public Address(String publicLoc, String complement, String neighborhood,
+                 String location, String fu, Long number) {
   }
 
   public String getCode() {
@@ -79,6 +81,14 @@ public class Address {
     this.fu = fu;
   }
 
+  public Long getNumber() {
+    return number;
+  }
+
+  public void setNumber(Long number) {
+    this.number = number;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -93,6 +103,7 @@ public class Address {
         && Objects.equals(complement, address.complement)
         && Objects.equals(neighborhood, address.neighborhood)
         && Objects.equals(location, address.location)
-        && Objects.equals(fu, address.fu);
+        && Objects.equals(fu, address.fu)
+        && Objects.equals(number, address.number);
   }
 }
