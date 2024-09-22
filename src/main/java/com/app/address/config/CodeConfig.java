@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.support.BasicAuthenticationInterceptor;
 
+/**
+ * codeconfig.
+ */
 @Configuration
 public class CodeConfig {
 
@@ -16,6 +19,11 @@ public class CodeConfig {
 
   private BasicAuthenticationInterceptor basicAuthenticationInterceptor;
 
+  /**
+   * basicauthenticationinterceptor.
+   *
+   * @return basicauthenticationinterceptor
+   */
   @Bean
   public BasicAuthenticationInterceptor basicAuthenticationInterceptor() {
     return new BasicAuthenticationInterceptor(username, password);
