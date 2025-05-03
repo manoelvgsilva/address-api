@@ -4,6 +4,7 @@ import com.app.address.controller.dto.AddressDto;
 import com.app.address.service.AddressService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,12 +52,17 @@ public class AddressController {
   public ResponseEntity<AddressDto> sendAddress(@RequestBody String code)
       throws JsonProcessingException {
     log.info("## Dados enviados pelo cliente: {}", code);
-    AddressDto addressDto =
-        AddressDto.fromEntity(addressService.findByCode(String.valueOf(capterCode(code))));
+    AddressDto addressDto = AddressDto.fromEntity(addressService.findByCode(code));
     ObjectMapper objectMapper = new ObjectMapper();
     String message = objectMapper.writeValueAsString(addressDto);
     addressService.sendMessage(message);
     log.info("## Endereco retornado pela api de cep: {}", addressDto);
-    return ResponseEntity.ok(addressDto);
+    return ResponseEntity.status(HttpStatus.CREATED).body(addressDto);
+  }
+
+  @GetMapping("/cities/{state}")
+  public ResponseEntity<List<String>> getCitiesByState(@PathVariable("state") String state) {
+    List<String> cities = addressService.getCitiesByState(state);
+    return ResponseEntity.ok(cities);
   }
 }

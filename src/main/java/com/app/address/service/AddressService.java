@@ -3,10 +3,14 @@ package com.app.address.service;
 import com.app.address.entity.Address;
 import com.app.address.repository.AddressRepository;
 import com.app.address.repository.ZipcodeClient;
+import java.util.List;
 import java.util.Optional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +20,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Log4j2
 public class AddressService {
+
+  @Autowired
+  private MongoTemplate mongoTemplate;
 
   @Value("${topic.address-client}")
   private String topicAddressClient;
@@ -64,5 +71,17 @@ public class AddressService {
   public void sendMessage(String message) {
     this.kafkaTemplate.send(topicAddressClient, message);
     log.info("Mensagem enviada para o topic.address-client: {}", message);
+  }
+
+  /**
+   * getcitiesbystate.
+   *
+   * @param state the state
+   * @return cities
+   */
+  public List<String> getCitiesByState(String state) {
+    Query query = new Query();
+    query.addCriteria(Criteria.where("fu").is(state.toUpperCase()));
+    return mongoTemplate.findDistinct(query, "location", Address.class, String.class);
   }
 }
