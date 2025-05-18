@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
- * ziocodeclient.
+ * ZipcodeClient.
  */
 @FeignClient(name = "zipcode", url = "https://zipcode.com.br/ws")
 public interface ZipcodeClient {
@@ -19,4 +19,13 @@ public interface ZipcodeClient {
    */
   @GetMapping("/{code}/json")
   Address findByCode(@PathVariable("code") String code);
+
+  /**
+   * findbycep.
+   *
+   * @param cep the cep
+   * @return address
+   */
+  @GetMapping("/{cep}/json")
+  Address findByCep(@PathVariable("cep") String cep);
 }

@@ -60,9 +60,27 @@ public class AddressController {
     return ResponseEntity.status(HttpStatus.CREATED).body(addressDto);
   }
 
+  /**
+   * getCitiesByState.
+   *
+   * @param state the state
+   * @return list of cities
+   */
   @GetMapping("/cities/{state}")
   public ResponseEntity<List<String>> getCitiesByState(@PathVariable("state") String state) {
     List<String> cities = addressService.getCitiesByState(state);
     return ResponseEntity.ok(cities);
+  }
+
+  /**
+   * getAddressByCep.
+   *
+   * @param cep the cep
+   * @return address details
+   */
+  @GetMapping("/cep/{cep}")
+  public ResponseEntity<AddressDto> getAddressByCep(@PathVariable("cep") String cep) {
+    AddressDto addressDto = AddressDto.fromEntity(addressService.findByCep(cep));
+    return ResponseEntity.ok(addressDto);
   }
 }

@@ -84,4 +84,21 @@ public class AddressService {
     query.addCriteria(Criteria.where("fu").is(state.toUpperCase()));
     return mongoTemplate.findDistinct(query, "location", Address.class, String.class);
   }
+
+  /**
+   * findbycep.
+   *
+   * @param cep the cep
+   * @return address
+   */
+  public Address findByCep(String cep) {
+    // Aqui, assumimos que o cliente de CEP (zipcodeClient) pode ter um método para buscar o endereço por CEP
+    Address address = zipcodeClient.findByCep(cep);
+    if (address != null) {
+      log.info("Endereço encontrado para o CEP: {}", cep);
+    } else {
+      log.warn("Nenhum endereço encontrado para o CEP: {}", cep);
+    }
+    return address;
+  }
 }
